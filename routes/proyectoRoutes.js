@@ -1,0 +1,37 @@
+import express from "express";
+import {
+  obtenerProyectos,
+  nuevoProyecto,
+  obtenerProyecto,
+  editarProyecto,
+  eliminarProyecto,
+  agregarColaborador,
+  eliminarColaborador,
+  buscarColaborador
+
+
+} from "../controllers/proyectoController.js";
+const router = express.Router();
+import checkAuth from "../middlewares/checkAuth.js";
+
+
+
+router
+  .route("/")
+  .get(checkAuth, obtenerProyectos)
+  .post(checkAuth, nuevoProyecto);
+
+router
+  .route("/:id")
+  .get(checkAuth, obtenerProyecto)
+  .put(checkAuth, editarProyecto)
+  .delete(checkAuth, eliminarProyecto);
+
+
+router.post('/colaboradores', checkAuth, buscarColaborador)
+router.post('/colaboradores/:id', checkAuth, agregarColaborador)
+router.post('/eliminar-colaborador/:id', checkAuth, eliminarColaborador)
+
+
+
+export default router;
